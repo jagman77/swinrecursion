@@ -65,7 +65,7 @@ namespace Exercises
 
                 current = current.Next;
             }
-
+            
             return false;
         }
 
@@ -74,7 +74,19 @@ namespace Exercises
         /// </summary>
         /// <returns>int: count</returns>
         public int Count() {
-            return -1;
+            int count = 1;
+            if (Head.Next != null)
+            {
+                count++;
+                ListNode cur = Head.Next;
+                while (cur.Next != null)
+                {
+                    count++;
+                    cur = cur.Next;
+                }
+            }
+            return count;
+
         }
 
         /// <summary>
@@ -83,6 +95,9 @@ namespace Exercises
         /// <param name="data"></param>
         /// <returns>success: true</returns>
         public bool AddToStart(string data) {
+            ListNode currentStart = Head;
+            Head = new ListNode(data);
+            Head.Next = currentStart;
             return false;
         }
 
@@ -94,7 +109,36 @@ namespace Exercises
         /// <param name="index"></param>
         /// <returns></returns>
         public bool AddNodeAt(string data, int index) {
+            ListNode newNode = new ListNode(data);
+
+            if (Head.Next != null && index >= 0)
+            {
+                
+                ListNode current = Head;
+                
+                for (int i = 0; i < index; i++)
+                {
+                    if (current.Next != null)
+                    {
+                        current = current.Next;
+                    } else
+                    {
+                        AddToEnd(null);
+                    }
+                    
+                }
+                newNode.Next = current;
+                ListNode curr = Head;
+                for (int i = 0; i < index - 1; i++)
+                {
+                    curr = curr.Next;
+                }
+                curr.Next = newNode;
+
+                
+            }
             return false;
+
         }
 
         /// <summary>
@@ -103,6 +147,26 @@ namespace Exercises
         /// <param name="index"></param>
         /// <returns></returns>
         public bool DeleteNodeAt(int index) {
+
+            ListNode current = Head;
+            if (Head != null)
+            {
+                for (int i = 1; i < index; i++)
+                {
+                    if (current.Next != null)
+                    {
+                        current = current.Next;
+                    }
+                }
+                if (current.Next != null)
+                {
+                    current.Next = current.Next.Next;
+                    return true;
+                }
+            }
+            
+
+
             return false;
         }
     }
